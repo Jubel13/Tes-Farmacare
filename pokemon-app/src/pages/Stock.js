@@ -1,10 +1,8 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import Pokemon from "../components/Pokemon";
 
 function Stock() {
   const { pokemons } = useSelector((state) => state.pokemonReducer);
-  const dispatch = useDispatch();
 
   return (
     <div className='container'>

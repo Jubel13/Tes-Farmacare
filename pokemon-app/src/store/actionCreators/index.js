@@ -17,7 +17,15 @@ export function fetchPokemons() {
                 .split("/")
                 .filter((el) => el)
                 .at(-1),
-              name: el.name,
+              name: el.name.replace(/(^\w|\s\w)/g, (m) => m.toUpperCase()),
+              histories: [
+                {
+                  time: new Date(),
+                  activity: "Stock Awal",
+                  notes: "Stock Awal",
+                  jumlah: 10,
+                },
+              ],
               stock: 10,
             };
             pokemons.push(tempObj);

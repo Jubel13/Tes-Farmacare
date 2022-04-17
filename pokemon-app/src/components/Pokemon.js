@@ -1,8 +1,12 @@
+import { Link } from "react-router-dom";
+
 function Pokemon({ pokemon }) {
   return (
     <>
       <tr>
-        <td>{pokemon.name}</td>
+        <td>
+          <Link to={`/pokemon/${pokemon.id}`}>{pokemon.name}</Link>
+        </td>
         <td>{pokemon.stock}</td>
       </tr>
     </>
