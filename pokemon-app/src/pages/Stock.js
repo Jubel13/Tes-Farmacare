@@ -1,8 +1,21 @@
 import { useSelector } from "react-redux";
 import Pokemon from "../components/Pokemon";
+import { useState } from "react";
 
 function Stock() {
-  const { pokemons } = useSelector((state) => state.pokemonReducer);
+  const [name, setName] = useState("");
+  let { pokemons } = useSelector((state) => state.pokemonReducer);
+
+  function changeName(e) {
+    let value = e.target.value;
+    setName(value);
+  }
+
+  if (name) {
+    pokemons = pokemons.filter((el) =>
+      el.name.toLowerCase().includes(name.toLowerCase())
+    );
+  }
 
   return (
     <div className='container'>
@@ -13,10 +26,9 @@ function Stock() {
           type='search'
           placeholder='Search'
           aria-label='Search'
+          value={name}
+          onChange={changeName}
         />
-        <button class='btn btn-outline-success' type='submit'>
-          Search
-        </button>
       </form>
       <table class='table'>
         <thead>
