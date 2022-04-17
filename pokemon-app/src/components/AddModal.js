@@ -1,12 +1,34 @@
 import { Modal, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-function AddModal({ show, setShow }) {
-  const handleClose = () => setShow(false);
+function AddModal({ show, setShow, pokemon }) {
   const navigate = useNavigate();
+  const [one, setOne] = useState(0);
+  const [lusin, setLusin] = useState(0);
+
+  function changeOne(e) {
+    let value = e.target.value;
+    setOne(value);
+  }
+
+  function changeLusin(e) {
+    let value = e.target.value;
+    setLusin(value);
+  }
+
+  const handleClose = () => {
+    setOne(0);
+    setLusin(0);
+    setShow(false);
+  };
+
+  let totalStock = +one + +lusin * 12;
 
   function saveHandler() {
-    navigate("/confirmation", { state: "Hello" });
+    navigate("/confirmation", {
+      state: { one, lusin, pokemon },
+    });
   }
 
   return (
@@ -30,27 +52,37 @@ function AddModal({ show, setShow }) {
                 <td>Pcs</td>
                 <td className='d-flex flex-row justify-content-between'>
                   <p className=''>1 x</p>
-                  <input className='form-control w-25' type='number' />
+                  <input
+                    value={one}
+                    onChange={changeOne}
+                    className='form-control w-25'
+                    type='number'
+                  />
                   <p>=</p>
                 </td>
-                <td></td>
+                <td>{one}</td>
               </tr>
               <tr>
                 <td>Lusin</td>
                 <td className='d-flex flex-row justify-content-between'>
                   <p>12 x </p>
-                  <input className='form-control w-25' type='number' />
+                  <input
+                    value={lusin}
+                    onChange={changeLusin}
+                    className='form-control w-25'
+                    type='number'
+                  />
                   <p>=</p>
                 </td>
-                <td></td>
+                <td>{lusin * 12}</td>
               </tr>
             </tbody>
           </table>
-          <div className='d-flex flex-row'>
+          <div className='d-flex flex-row justify-content-between'>
             <p>
               <strong>Total Stock</strong> (dalam pcs)
             </p>
-            <p></p>
+            <p className='me-4'>{pokemon.stock + totalStock}</p>
           </div>
         </Modal.Body>
         <Modal.Footer>

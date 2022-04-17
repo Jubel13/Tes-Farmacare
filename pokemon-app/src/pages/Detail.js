@@ -10,11 +10,11 @@ function Detail() {
   const handleShow = () => setShow(true);
 
   let pokemon = pokemons.find((el) => el.id === +id);
-  console.log(pokemon);
+  // console.log(pokemon);
 
   return (
     <>
-      <AddModal setShow={setShow} show={show} />
+      <AddModal setShow={setShow} show={show} pokemon={pokemon} />
       <div className='container'>
         <div className='d-flex justify-content-between'>
           <Link to='/'>Stock Pokemon</Link>
@@ -46,7 +46,7 @@ function Detail() {
                   <td>{el.activity}</td>
                   <td>{el.notes}</td>
                   <td>{el.jumlah}</td>
-                  <td>{pokemon.stock}</td>
+                  <td>{el.stockHistory}</td>
                 </tr>
               );
             })}
