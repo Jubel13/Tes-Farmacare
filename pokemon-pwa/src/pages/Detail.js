@@ -98,8 +98,8 @@ function Detail() {
                     <tr key={el.id}>
                       <td>
                         <p>{el.time.toLocaleString().split(",")[1]}</p>
-                        <p>{el.activity}</p>
-                        <p>{el.notes}</p>
+                        <p style={{ color: "#006A7A" }}>{el.activity}</p>
+                        <p>{`"${el.notes}"`}</p>
                       </td>
                       <td
                         style={
