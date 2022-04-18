@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import AddModal from "../components/AddModal";
 import { useDispatch } from "react-redux";
@@ -43,72 +43,142 @@ function Confirmation() {
     navigate(`/pokemon/${pokemon.id}`);
   }
 
-  return (
-    <div className='container'>
-      <AddModal setShow={setShow} show={show} pokemon={pokemon} />
+  const vw = Math.max(
+    document.documentElement.clientWidth || 0,
+    window.innerWidth || 0
+  );
 
-      <h1>Konfirmasi update Stock</h1>
-      <p>Selisih</p>
-      <h1>{updateStock} pcs</h1>
-      <div className='d-flex flex-row'>
-        <div>
-          <p>Di sistem</p>
-          <h5>{pokemon.stock} pcs</h5>
+  return (
+    <>
+      {vw <= 412 && (
+        <div className='text-center mt-2'>
+          <Link
+            to={`/pokemon/${pokemon.id}`}
+            className='fs-5 text-decoration-none'
+          >
+            x {pokemon.name}
+          </Link>
         </div>
-        <p>
-          <i class='fa-solid fa-arrow-right'></i>
-        </p>
-        <div>
-          <p>Hasil Update Stock</p>
-          <h5>{+pokemon.stock + updateStock} pcs</h5>
+      )}
+
+      <div className='container m-3 mx-auto'>
+        <AddModal setShow={setShow} show={show} pokemon={pokemon} />
+        <h1>Konfirmasi update Stock</h1>
+        <p className='mt-4'>Selisih</p>
+        <h1>{updateStock > 0 ? `+${updateStock}` : updateStock} pcs</h1>
+        <div
+          className={
+            vw > 412
+              ? "d-flex flex-row w-50 justify-content-between align-items-center mt-4"
+              : "d-flex flex-row w-75 justify-content-between align-items-center mt-4"
+          }
+        >
+          <div>
+            <p>Di sistem</p>
+            <h5>{pokemon.stock} pcs</h5>
+          </div>
+          <p>
+            <i class='fa-solid fa-arrow-right fa-lg'></i>
+          </p>
+          <div>
+            <p>Hasil Update Stock</p>
+            <h5>{+pokemon.stock + updateStock} pcs</h5>
+          </div>
         </div>
-      </div>
-      <table class='table'>
-        <thead>
-          <tr>
-            <th scope='col'>Keterangan</th>
-            <th scope='col'>Detail</th>
-            <th scope='col'>Jumlah</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Hasil Update Stock</td>
-            <td>
-              {one} pcs, {lusin} lusin(12s)
-            </td>
-            <td className='d-flex flex-row'>
-              <p className='mx-2'>{+pokemon.stock + updateStock} pcs</p>
-              <div onClick={handleShow}>
-                <i class='fa-solid fa-pencil'></i>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan='2'>Total hasil stock opname</td>
-            <td>{+pokemon.stock + updateStock} pcs</td>
-          </tr>
-        </tbody>
-      </table>
-      <h3>Catatan</h3>
-      <div class='form-floating'>
+
+        {vw > 412 ? (
+          <table className='table mt-4'>
+            <thead>
+              <tr>
+                <th scope='col'>Keterangan</th>
+                <th scope='col'>Detail</th>
+                <th scope='col' className='text-end'>
+                  Jumlah
+                </th>
+                <th scope='col' className='col-2'></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Hasil Update Stock</td>
+                <td>
+                  {one} pcs, {lusin} lusin(12s)
+                </td>
+                <td className='text-end'>
+                  <p>{+pokemon.stock + updateStock} pcs</p>
+                </td>
+                <td>
+                  <div onClick={handleShow}>
+                    <i class='fa-solid fa-pencil'></i>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colSpan='2'>Total hasil stock opname</td>
+                <td className='text-end'>{+pokemon.stock + updateStock} pcs</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        ) : (
+          <div className='mt-4'>
+            <h6>Detail stock opname</h6>
+            <table className='table'>
+              <thead>
+                <tr>
+                  <th scope='col'>Keterangan</th>
+                  <th scope='col' className='text-end'>
+                    Jumlah
+                  </th>
+                  <th scope='col'></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <p style={{ color: "green" }}>Hasil Update Stock</p>
+                    <p>
+                      {one} pcs, {lusin} lusin(12s)
+                    </p>
+                  </td>
+                  <td className='text-end'>
+                    <p>{+pokemon.stock + updateStock} pcs</p>
+                  </td>
+                  <td>
+                    <div onClick={handleShow}>
+                      <i class='fa-solid fa-pencil'></i>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Total hasil stock opname</td>
+                  <td className='text-end'>
+                    {+pokemon.stock + updateStock} pcs
+                  </td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        <h4 className='mt-4'>Catatan</h4>
         <textarea
           class='form-control'
           placeholder='Contoh: Stock awal'
-          id='floatingTextarea2'
           value={notes}
           onChange={changeNotes}
         ></textarea>
+        <div className='d-flex flex-row justify-content-end mt-3'>
+          <button onClick={saveUpdate} className='btn btn-success me-2'>
+            Simpan
+          </button>
+          <button onClick={cancelUpdate} className='btn btn-outline-success'>
+            Batal
+          </button>
+        </div>
       </div>
-      <div className='d-flex flex-row justify-content-end'>
-        <button onClick={saveUpdate} className='btn btn-success'>
-          Simpan
-        </button>
-        <button onClick={cancelUpdate} className='btn btn-outline-success'>
-          Batal
-        </button>
-      </div>
-    </div>
+    </>
   );
 }
 

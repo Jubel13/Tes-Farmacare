@@ -7,7 +7,7 @@ function Pokemon({ pokemon }) {
         <td>
           <Link to={`/pokemon/${pokemon.id}`}>{pokemon.name}</Link>
         </td>
-        <td>{pokemon.stock}</td>
+        <td>{pokemon.stock} pcs</td>
       </tr>
     </>
   );

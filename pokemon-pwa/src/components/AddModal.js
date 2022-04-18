@@ -36,31 +36,35 @@ function AddModal({ show, setShow, pokemon }) {
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header className='d-flex flex-column'>
           <Modal.Title>Update Stock</Modal.Title>
-          <p>Masukkan jumlah stock yang tersedia di rak ini</p>
+          <p>Masukkan jumlah stock yang tersedia di rak saat ini</p>
         </Modal.Header>
         <Modal.Body>
           <table class='table'>
             <thead>
               <tr>
                 <th scope='col'>Kemasan</th>
-                <th scope='col'>Jumlah</th>
-                <th scope='col'>Stock</th>
+                <th className='col-5 text-center' scope='col'>
+                  Jumlah
+                </th>
+                <th scope='col' className='text-center'>
+                  Stock
+                </th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>Pcs</td>
                 <td className='d-flex flex-row justify-content-between'>
-                  <p className=''>1 x</p>
+                  <p className=''>1 x </p>
                   <input
                     value={one}
                     onChange={changeOne}
-                    className='form-control w-25'
+                    className='form-control w-50'
                     type='number'
                   />
                   <p>=</p>
                 </td>
-                <td>{one}</td>
+                <td className='text-center'>{one}</td>
               </tr>
               <tr>
                 <td>Lusin</td>
@@ -69,30 +73,30 @@ function AddModal({ show, setShow, pokemon }) {
                   <input
                     value={lusin}
                     onChange={changeLusin}
-                    className='form-control w-25'
+                    className='form-control w-50'
                     type='number'
                   />
                   <p>=</p>
                 </td>
-                <td>{lusin * 12}</td>
+                <td className='text-center'>{lusin * 12}</td>
+              </tr>
+              <tr>
+                <td colSpan={2}>
+                  <strong>Total Stock</strong> (dalam pcs)
+                </td>
+                <td className='text-center'>{pokemon.stock + totalStock}</td>
               </tr>
             </tbody>
           </table>
-          <div className='d-flex flex-row justify-content-between'>
-            <p>
-              <strong>Total Stock</strong> (dalam pcs)
-            </p>
-            <p className='me-4'>{pokemon.stock + totalStock}</p>
+          <div className='d-flex justify-content-end'>
+            <Button className='me-2' variant='primary' onClick={saveHandler}>
+              Simpan
+            </Button>
+            <Button variant='secondary' onClick={handleClose}>
+              Batal
+            </Button>
           </div>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant='primary' onClick={saveHandler}>
-            Simpan
-          </Button>
-          <Button variant='secondary' onClick={handleClose}>
-            Batal
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );
